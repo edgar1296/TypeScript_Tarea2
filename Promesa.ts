@@ -1,9 +1,9 @@
 const promise = new Promise((resolve, reject) => {
-    resolve(123);
+    reject(new Error("Algo malo a pasado"));
 });
 promise.then((res) => {
-    console.log('I get called:', res === 123); // Devuelve: true
+    // This is never called 
 });
 promise.catch((err) => {
-    // Nuca es utilizado
+    console.log('Tengo una llamada: ', err.message); // Tengo una llamada: 'Algo malo a pasado'
 });
