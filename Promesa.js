@@ -1,21 +1,26 @@
-// good json file
-loadJSONAsync('good.json')
-    .then(function (val) { console.log(val); })["catch"](function (err) {
-    console.log('good.json error', err.message); // never called
+// Una función asincróna simulando la petición desde el servidor
+function loadItem(id) {
+    return new Promise(function (resolve) {
+        console.log('loading item', id);
+        setTimeout(function () {
+            resolve({ id: id });
+        }, 1000);
+    });
+}
+// Cadena (serie)
+var item1, item2;
+loadItem(1)
+    .then(function (res) {
+    item1 = res;
+    return loadItem(2);
 })
-    // non-existent json file
-    .then(function () {
-    return loadJSONAsync('absent.json');
-})
-    .then(function (val) { console.log(val); }) // never called
-["catch"](function (err) {
-    console.log('absent.json error', err.message);
-})
-    // invalid json file
-    .then(function () {
-    return loadJSONAsync('bad.json');
-})
-    .then(function (val) { console.log(val); }) // never called
-["catch"](function (err) {
-    console.log('bad.json error', err.message);
-});
+    .then(function (res) {
+    item2 = res;
+    console.log('done');
+}); // overall time will be around 2s
+// Paralelo
+Promise.all([loadItem(1), loadItem(2)])
+    .then(function (res) {
+    item1 = res[0], item2 = res[1];
+    console.log('done');
+}); // overall time will be around 1s
