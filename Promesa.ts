@@ -1,16 +1,15 @@
-Promise.reject(new Error('something	bad	happened'))
-    .then((res) => {
-        console.log(res);	//	not	called
-        return	456;
-    })
-    .then((res)	=> {
-        console.log(res);	//	not	called
-        return	Promise.resolve(123);
-    })
-    .then((res) => {
-        console.log(res);	//	not	called
-        return	Promise.resolve(123);
-    })
-    .catch((err) => { 
-        console.log(err.message);	//	something	bad	happened
+function iReturnPromiseAfter1Second():Promise<string> {
+    return new Promise((resolve)=>{
+    setTimeout(()=>resolve("Hello world!"), 1000);
     });
+}
+Promise.resolve(123)
+    .then((res)=>{
+        // res is inferred to be of type `number`
+        return iReturnPromiseAfter1Second();
+    })
+    .then((res) => {
+        // res is inferred to be of type `string`
+        console.log(res); // Hello world!
+    });
+    
