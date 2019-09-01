@@ -1,15 +1,18 @@
-function* generator() {
-    try {
-        yield 'foo';
-        throw Error("Test");
-    }
-    catch(err) {
-    console.log(err.message); // bar!
-    }
+function getFirstName() {
+    setTimeout(function(){
+        gen.next('alex')
+    }, 1000);
 }
-var iterator = generator();
-// Start execution till we get first yield value
-var foo = iterator.next();
-console.log(foo.value);
-// como está comentado la excepción no se ejuta ya que no hay un 'next()'
-//var foo = iterator.next();
+function getSecondName() {
+    setTimeout(function(){
+        gen.next('perry')
+    }, 1000);
+}
+function *sayHello() {
+    var a = yield getFirstName();
+    var b = yield getSecondName();
+    console.log(a, b); //alex perry
+}
+var gen = sayHello();
+gen.next();
+    
