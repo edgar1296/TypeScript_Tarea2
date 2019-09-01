@@ -1,15 +1,22 @@
-function iReturnPromiseAfter1Second():Promise<string> {
-    return new Promise((resolve)=>{
-    setTimeout(()=>resolve("Hello world!"), 1000);
-    });
-}
-Promise.resolve(123)
-    .then((res)=>{
-        // res is inferred to be of type `number`
-        return iReturnPromiseAfter1Second();
+// good json file
+loadJSONAsync('good.json')
+    .then(function (val) { console.log(val); })
+    .catch(function (err) {
+        console.log('good.json error', err.message); // never called
     })
-    .then((res) => {
-        // res is inferred to be of type `string`
-        console.log(res); // Hello world!
+// non-existent json file
+    .then(function () {
+        return loadJSONAsync('absent.json');
+    })
+    .then(function (val) { console.log(val); }) // never called
+    .catch(function (err) {
+        console.log('absent.json error', err.message);
+    })
+// invalid json file
+    .then(function () {
+        return loadJSONAsync('bad.json');
+    })
+    .then(function (val) { console.log(val); }) // never called
+    .catch(function (err) {
+        console.log('bad.json error', err.message);
     });
-    
