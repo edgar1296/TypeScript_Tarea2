@@ -25,25 +25,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-function generator() {
-    var bar;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, 'Console log'];
+function logGenerator() {
+    var _a, _b, _c, _d, _e, _f;
+    return __generator(this, function (_g) {
+        switch (_g.label) {
+            case 0:
+                _b = (_a = console).log;
+                return [4 /*yield*/];
             case 1:
-                bar = _a.sent();
-                console.log(bar); // 'Un testo inyectado' -> asignado por nextThing = iterator.next('bar')
-                return [4 /*yield*/, 1];
+                _b.apply(_a, [_g.sent()]);
+                _d = (_c = console).log;
+                return [4 /*yield*/];
             case 2:
-                _a.sent();
+                _d.apply(_c, [_g.sent()]);
+                _f = (_e = console).log;
+                return [4 /*yield*/];
+            case 3:
+                _f.apply(_e, [_g.sent()]);
                 return [2 /*return*/];
         }
     });
 }
-var iterator = generator();
-// Start execution till we get first yield value
-var foo = iterator.next();
-console.log(foo.value); // Console log
-// Resume execution injecting bar
-var nextThing = iterator.next('Un texto inyectado'); // Aqui se le asigna el value al foo.value
-console.log(nextThing);
+var gen = logGenerator();
+// the first call of next executes from the start of the function
+// until the first yield statement
+gen.next();
+gen.next('pretzel'); // pretzel
+gen.next('california'); // california
+gen.next('mayonnaise'); // mayonnaise
