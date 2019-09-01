@@ -1,12 +1,12 @@
-function* generator(){
-    console.log('Execution started');
-    yield 0;
-    console.log('Execution resumed');
+function* generator() {
+    var bar = yield 'Console log';
+    console.log(bar); // 'Un testo inyectado' -> asignado por nextThing = iterator.next('bar')
     yield 1;
-    console.log('Execution resumed');
-}
-var iterator = generator();
-console.log('Starting iteration'); // Esto se ejecutará antes que nada de dentro del método generator()
-console.log(iterator.next()); // { value: 0, done: false }
-console.log(iterator.next()); // { value: 1, done: false }
-console.log(iterator.next()); // { value: undefined, done: true }
+}.
+const iterator = generator();
+// Start execution till we get first yield value
+const foo = iterator.next();
+console.log(foo.value); // Console log
+// Resume execution injecting bar
+const nextThing = iterator.next('Un texto inyectado'); // Aqui se le asigna el value al foo.value
+console.log(nextThing);
